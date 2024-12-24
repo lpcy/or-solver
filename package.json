@@ -1,0 +1,18 @@
+{
+  "name": "or-solver",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rsbuild dev --open",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "mathjs": "^14.0.1",
+    "svelte": "^5.8.1"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^1.1.8",
+    "@rsbuild/plugin-svelte": "^1.0.5"
+  }
+}

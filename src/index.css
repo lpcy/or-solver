@@ -1,0 +1,43 @@
+.content{
+  text-align: center;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table, th, td{
+  border: 1px solid #ccc;
+}
+th, td{
+  padding: .5rem;
+}
+.rotate{border: 2px solid red;
+  border-radius: 20px;
+  padding: 0 5px;
+}
+select,input{
+  box-sizing: border-box;
+  font-size: 1.3rem;
+  width: 4rem;
+}
+.input-group{
+  display: inline-block;
+}
+button{
+  background: #008ed4;
+  color: #fff;
+  border: none;
+  font-size: 1.3rem;
+  border-radius: 2px;
+  padding: .3em .5em;
+  cursor: pointer;
+}
+.row{
+  margin-top: .3rem;
+}
+.to-example{
+  margin-top: 5rem;
+  cursor: pointer;
+  background: none;
+  color: #555;
+}
