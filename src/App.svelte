@@ -23,7 +23,7 @@
             maxCVIndex = cv.indexOf(maxCV);
             let maxCVColumn = math.squeeze(math.column(A, maxCVIndex));
             ratio = math.dotDivide(b, maxCVColumn);
-            const positiveValues = ratio.filter(value => value > 0);
+            const positiveValues = ratio.filter(value => value >= 0);
             if (positiveValues.length > 0){
                 const minV = Math.min(...positiveValues);
                 minRIndex = ratio.indexOf(minV);
@@ -78,22 +78,29 @@
                     'A': prob.A,
                     'b': prob.b
                 };
-        let its = [calc(prob,it)];
+        let its = [];
         let errMsg = "";
+        let latest = null;
         for(let i=0;i<101;i++){
             if(i == 100){
                 errMsg = "无法计算(计算次数过多)!";
                 break;
+            }else if(i == 0){
+                it = calc(prob,it);
+            }else{
+                it = calc(prob, rotate(prob, it));
             }
-            let newIt = calc(prob, rotate(prob, it));
-            its.push(newIt);
-            it = newIt;
-            if(newIt.maxCVIndex == -1){
+            its.push(it);
+            if(it.maxCVIndex == -1){
+                break;
+            }else if(it.minRIndex == -1){
+                latest = {
+                    'unbounded' : true
+                }
                 break;
             }
         }
-        let latest = null;
-        if(its.length > 0 && !errMsg){
+        if(!errMsg && !latest ){
             latest = {"bv":[]};
             let lastIt = its[its.length - 1];
             for(let i=0;i< source.vLen;i++){
@@ -257,6 +264,9 @@
     </div>
     <div class="row">
         {#if target.latest}
+            {#if target.latest.unbounded}
+                无界解
+            {:else}
             最优解：{#each target.latest.bv as b,index}
                         <span>
                             X<sub>{index + 1}</sub>
@@ -264,6 +274,7 @@
                         ={b}, 
                     {/each}
             最优值：{target.latest.z}
+            {/if}
         {/if}
     </div>
     {:else if source.vLen == 0}
